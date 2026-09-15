@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Iceberg Pass">
+  <defs>
+    <linearGradient id="ice" x1="26" x2="105" y1="18" y2="113" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#fff"/>
+      <stop offset=".42" stop-color="#65C9EF"/>
+      <stop offset="1" stop-color="#C8B8E4"/>
+    </linearGradient>
+  </defs>
+  <circle cx="64" cy="64" r="58" fill="#DFF4FC"/>
+  <path d="M64 18 94 66H34L64 18Z" fill="url(#ice)"/>
+  <path d="M34 70h60L78 110H50L34 70Z" fill="#9D9BD8" opacity=".68"/>
+  <path d="M22 68c15-5 27-5 42 0s27 5 42 0" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round"/>
+</svg>

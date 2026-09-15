@@ -1,0 +1,8 @@
+{
+  "type": "module",
+  "scripts": {
+    "test:passcodes": "node ./tools/check-passcodes.mjs",
+    "test:static": "node ./tools/static-checks.mjs",
+    "test": "npm run test:passcodes && npm run test:static"
+  }
+}
