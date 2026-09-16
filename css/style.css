@@ -2909,3 +2909,645 @@ h1 {
     white-space: normal;
   }
 }
+
+/* Draw screen 05: one-card meditative ritual. */
+.draw-screen {
+  isolation: isolate;
+  min-height: 100dvh;
+  padding: 0;
+  overflow: hidden;
+  background: #061d4a;
+  color: #fff;
+  transform-origin: 50% 55%;
+}
+
+.draw-screen img {
+  user-select: none;
+  -webkit-user-drag: none;
+  pointer-events: none;
+}
+
+.draw-bg-layer {
+  position: fixed;
+  z-index: -10;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  animation: drawBgIn 1.1s ease both;
+}
+
+.draw-top-light-layer,
+.draw-particle-layer,
+.draw-floating-crystal-layer,
+.draw-mist-layer,
+.draw-bubble-layer,
+.draw-bottom-crystal-layer,
+.draw-bottom-energy-layer {
+  position: absolute;
+}
+
+.draw-top-light-layer {
+  z-index: -7;
+  left: 50%;
+  top: -10px;
+  width: min(520px, 132vw);
+  height: auto;
+  transform: translateX(-50%);
+  opacity: .58;
+  mix-blend-mode: screen;
+  animation: drawLightIn 1.2s .35s ease both, drawLightDrift 22s 1.5s ease-in-out infinite;
+}
+
+.draw-particle-layer {
+  z-index: -6;
+  left: 50%;
+  top: 10%;
+  width: min(500px, 128vw);
+  height: auto;
+  transform: translateX(-50%);
+  opacity: .56;
+  mix-blend-mode: screen;
+  animation: drawParticleFloat 18s linear infinite;
+}
+
+.draw-floating-crystal-layer {
+  z-index: -5;
+  left: 50%;
+  top: 24%;
+  width: min(430px, 112vw);
+  height: auto;
+  transform: translateX(-50%);
+  opacity: .42;
+  mix-blend-mode: screen;
+  animation: drawCrystalFloat 9s ease-in-out infinite;
+}
+
+.draw-mist-layer {
+  z-index: -4;
+  left: 50%;
+  bottom: 16%;
+  width: min(500px, 130vw);
+  height: auto;
+  transform: translateX(-50%);
+  opacity: .36;
+  mix-blend-mode: screen;
+  animation: drawMistFlow 16s ease-in-out infinite;
+}
+
+.draw-bubble-layer {
+  z-index: -3;
+  left: 50%;
+  top: 18%;
+  width: min(390px, 100vw);
+  height: auto;
+  transform: translateX(-50%);
+  opacity: .46;
+  mix-blend-mode: screen;
+  animation: drawBubbleRise 14s linear infinite;
+}
+
+.draw-bottom-crystal-layer {
+  z-index: 1;
+  left: 50%;
+  bottom: -44px;
+  width: min(470px, 122vw);
+  height: auto;
+  transform: translateX(-50%);
+  opacity: .64;
+}
+
+.draw-bottom-energy-layer {
+  z-index: 0;
+  left: 50%;
+  bottom: -2px;
+  width: min(430px, 112vw);
+  height: auto;
+  transform: translateX(-50%);
+  opacity: .52;
+  mix-blend-mode: screen;
+  animation: drawBottomGateBreathe 4.4s ease-in-out infinite;
+}
+
+.draw-back-button {
+  position: absolute;
+  z-index: 10;
+  left: clamp(16px, 5vw, 50px);
+  top: calc(27px + env(safe-area-inset-top));
+  width: 45px;
+  height: 45px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+
+.draw-back-button img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 0 12px rgba(101,201,239,.28));
+}
+
+.draw-copy {
+  position: absolute;
+  z-index: 8;
+  left: 50%;
+  top: calc(52px + env(safe-area-inset-top));
+  width: min(338px, 88vw);
+  transform: translateX(-50%);
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+  text-align: center;
+  text-shadow: 0 3px 22px rgba(5,45,95,.58);
+}
+
+.draw-copy p,
+.draw-copy h2 {
+  margin: 0;
+}
+
+.draw-eyebrow,
+.draw-english {
+  font-family: Georgia, "Times New Roman", "Songti SC", serif;
+  font-size: 11px;
+  letter-spacing: .33em;
+  color: rgba(255,255,255,.84);
+}
+
+.draw-section {
+  position: relative;
+  font-family: "Songti SC", "STSong", serif;
+  font-size: 14px;
+  letter-spacing: .18em;
+  color: rgba(255,255,255,.86);
+}
+
+.draw-section::before,
+.draw-section::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 45px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.72));
+}
+
+.draw-section::before {
+  right: calc(100% + 13px);
+}
+
+.draw-section::after {
+  left: calc(100% + 13px);
+  transform: scaleX(-1);
+}
+
+.draw-copy h2 {
+  margin-top: 14px;
+  font-family: "Songti SC", "STSong", serif;
+  font-size: clamp(31px, 8.7vw, 42px);
+  line-height: 1.3;
+  letter-spacing: .03em;
+  font-weight: 700;
+  color: rgba(255,255,255,.96);
+}
+
+.draw-subtitle {
+  margin-top: 6px;
+  font-size: 14px;
+  line-height: 1.72;
+  color: rgba(236,249,255,.82);
+}
+
+.draw-card-artifact {
+  position: absolute;
+  z-index: 5;
+  left: 50%;
+  top: 52%;
+  width: min(300px, 76vw);
+  height: min(438px, 51dvh);
+  padding: 0;
+  border: 0;
+  background: transparent;
+  transform: translate(-50%, -50%);
+  touch-action: manipulation;
+  animation: drawCardAppear 1.2s .45s ease-out both, drawCardFloat 4s 1.7s ease-in-out infinite;
+}
+
+.draw-card-stack,
+.draw-card-layer,
+.draw-card-shadow,
+.draw-water-reflection,
+.draw-portal-ring {
+  position: absolute;
+}
+
+.draw-card-stack {
+  z-index: 4;
+  inset: 0;
+  transform-origin: 50% 55%;
+}
+
+.draw-card-layer {
+  left: 50%;
+  top: 50%;
+  width: 100%;
+  height: auto;
+  transform: translate(-50%, -50%);
+}
+
+.draw-card-aura {
+  opacity: .82;
+  mix-blend-mode: screen;
+}
+
+.draw-card-body {
+  opacity: .96;
+}
+
+.draw-card-frost {
+  opacity: .42;
+  mix-blend-mode: screen;
+}
+
+.draw-card-inner {
+  opacity: .86;
+}
+
+.draw-card-iceberg {
+  width: 112%;
+  opacity: .94;
+  filter: drop-shadow(0 0 24px rgba(101,201,239,.24));
+}
+
+.draw-card-scan {
+  width: 112%;
+  opacity: .74;
+  mix-blend-mode: screen;
+  animation: drawScanRotate 16s linear infinite;
+}
+
+.draw-card-core {
+  opacity: .8;
+  mix-blend-mode: screen;
+  filter: brightness(1.08) drop-shadow(0 0 24px rgba(205,190,255,.42));
+}
+
+.draw-card-breathing {
+  opacity: .58;
+  mix-blend-mode: screen;
+  animation: drawCardBreath 3s ease-in-out infinite;
+}
+
+.draw-card-edge {
+  opacity: .92;
+  mix-blend-mode: screen;
+}
+
+.draw-card-reflection {
+  opacity: .72;
+  mix-blend-mode: screen;
+}
+
+.draw-card-dust {
+  opacity: .76;
+  mix-blend-mode: screen;
+  animation: drawStarDust 6s ease-in-out infinite;
+}
+
+.draw-card-sweep {
+  width: 118%;
+  opacity: .28;
+  mix-blend-mode: screen;
+  animation: drawSweep 5.6s ease-in-out infinite;
+}
+
+.draw-card-flip-light,
+.draw-card-reveal-burst {
+  opacity: 0;
+  mix-blend-mode: screen;
+}
+
+.draw-card-shadow {
+  z-index: 1;
+  left: 50%;
+  bottom: -13%;
+  width: 128%;
+  height: auto;
+  transform: translateX(-50%);
+  opacity: .52;
+}
+
+.draw-water-reflection {
+  z-index: 2;
+  left: 50%;
+  bottom: -10%;
+  width: 138%;
+  height: auto;
+  transform: translateX(-50%);
+  opacity: .72;
+  mix-blend-mode: screen;
+  animation: drawWaterPulse 4.8s ease-in-out infinite;
+}
+
+.draw-portal-ring {
+  z-index: 3;
+  left: 50%;
+  bottom: -9%;
+  width: 142%;
+  height: auto;
+  transform: translateX(-50%);
+  opacity: .8;
+  mix-blend-mode: screen;
+  animation: drawPortalPulse 4s ease-in-out infinite;
+}
+
+.draw-button {
+  position: absolute;
+  z-index: 9;
+  left: 50%;
+  bottom: calc(150px + env(safe-area-inset-bottom));
+  width: min(300px, 78vw);
+  height: 74px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  transform: translateX(-50%);
+  color: #fff;
+  text-align: center;
+  touch-action: manipulation;
+  animation: drawTextIn .8s 1.45s ease both;
+}
+
+.draw-button-bg,
+.draw-button-glow,
+.draw-button-arrow,
+.draw-touch-ripple {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 118%;
+  height: auto;
+  transform: translate(-50%, -50%);
+}
+
+.draw-button-bg {
+  z-index: 0;
+  opacity: .96;
+}
+
+.draw-button-glow {
+  z-index: 1;
+  opacity: .68;
+  mix-blend-mode: screen;
+  animation: drawButtonGlow 3.4s ease-in-out infinite;
+}
+
+.draw-button span {
+  position: relative;
+  z-index: 2;
+  display: block;
+  padding-top: 13px;
+  font-family: "Songti SC", "STSong", serif;
+  font-size: 19px;
+  line-height: 1.45;
+  font-weight: 700;
+  text-shadow: 0 3px 18px rgba(5,45,95,.58);
+}
+
+.draw-button-arrow {
+  z-index: 3;
+  width: 112%;
+  opacity: .9;
+  mix-blend-mode: screen;
+}
+
+.draw-touch-ripple {
+  z-index: 4;
+  width: 92%;
+  opacity: 0;
+  mix-blend-mode: screen;
+}
+
+.draw-bottom-copy {
+  position: absolute;
+  z-index: 7;
+  left: 50%;
+  bottom: calc(40px + env(safe-area-inset-bottom));
+  width: min(320px, 82vw);
+  transform: translateX(-50%);
+  display: grid;
+  justify-items: center;
+  gap: 6px;
+  color: rgba(235,248,255,.78);
+  text-align: center;
+  text-shadow: 0 3px 18px rgba(5,45,95,.5);
+}
+
+.draw-bottom-copy span,
+.draw-bottom-copy p,
+.draw-bottom-copy small {
+  margin: 0;
+}
+
+.draw-bottom-copy p {
+  font-size: 14px;
+  letter-spacing: .12em;
+}
+
+.draw-bottom-copy small {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 10px;
+  letter-spacing: .28em;
+}
+
+.draw-revealing {
+  animation: drawPageReveal 1.5s ease forwards;
+}
+
+.draw-revealing .draw-button {
+  animation: drawButtonTap 1.5s ease forwards;
+}
+
+.draw-revealing .draw-touch-ripple {
+  animation: drawTouchRipple 1.5s ease forwards;
+}
+
+.draw-revealing .draw-card-stack {
+  animation: drawCardBrighten 1.5s ease forwards;
+}
+
+.draw-revealing .draw-card-flip-light {
+  animation: drawFlipLight 1.5s ease forwards;
+}
+
+.draw-revealing .draw-card-reveal-burst {
+  animation: drawRevealBurst 1.5s ease forwards;
+}
+
+@keyframes drawBgIn {
+  from { opacity: 0; filter: brightness(.82); }
+  to { opacity: 1; filter: brightness(1); }
+}
+
+@keyframes drawLightIn {
+  from { opacity: 0; transform: translateX(-50%) translateY(-12px); }
+  to { opacity: .58; transform: translateX(-50%) translateY(0); }
+}
+
+@keyframes drawLightDrift {
+  0%, 100% { transform: translateX(-50%) translateY(-2px) scale(1); }
+  50% { transform: translateX(-50%) translateY(8px) scale(1.04); }
+}
+
+@keyframes drawParticleFloat {
+  0% { transform: translate3d(-50%, 18px, 0); opacity: .4; }
+  50% { opacity: .68; }
+  100% { transform: translate3d(-50%, -22px, 0); opacity: .45; }
+}
+
+@keyframes drawCrystalFloat {
+  0%, 100% { transform: translateX(-50%) translateY(-8px) rotate(-1deg); }
+  50% { transform: translateX(-50%) translateY(10px) rotate(1deg); }
+}
+
+@keyframes drawMistFlow {
+  0%, 100% { transform: translateX(-52%); opacity: .28; }
+  50% { transform: translateX(-48%); opacity: .48; }
+}
+
+@keyframes drawBubbleRise {
+  from { transform: translate3d(-50%, 26px, 0); opacity: .22; }
+  50% { opacity: .52; }
+  to { transform: translate3d(-50%, -30px, 0); opacity: .26; }
+}
+
+@keyframes drawBottomGateBreathe {
+  0%, 100% { opacity: .42; filter: brightness(1); }
+  50% { opacity: .7; filter: brightness(1.22); }
+}
+
+@keyframes drawTextIn {
+  from { opacity: 0; transform: translate(-50%, 12px); }
+  to { opacity: 1; transform: translate(-50%, 0); }
+}
+
+@keyframes drawCardAppear {
+  from { opacity: 0; transform: translate(-50%, -50%) scale(.92); }
+  to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
+
+@keyframes drawCardFloat {
+  0%, 100% { transform: translate(-50%, calc(-50% - 6px)); }
+  50% { transform: translate(-50%, calc(-50% + 6px)); }
+}
+
+@keyframes drawScanRotate {
+  from { transform: translate(-50%, -50%) rotate(0); }
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+@keyframes drawCardBreath {
+  0%, 100% { opacity: .5; filter: brightness(1); }
+  50% { opacity: 1; filter: brightness(1.25); }
+}
+
+@keyframes drawStarDust {
+  0%, 100% { opacity: .48; transform: translate(-50%, -50%) scale(.99); }
+  50% { opacity: .86; transform: translate(-50%, -50%) scale(1.02); }
+}
+
+@keyframes drawSweep {
+  0%, 100% { opacity: .1; transform: translate(-52%, -50%) rotate(-3deg); }
+  50% { opacity: .38; transform: translate(-48%, -50%) rotate(3deg); }
+}
+
+@keyframes drawWaterPulse {
+  0%, 100% { opacity: .5; transform: translateX(-50%) scaleX(.96); }
+  50% { opacity: .78; transform: translateX(-50%) scaleX(1.04); }
+}
+
+@keyframes drawPortalPulse {
+  0%, 100% { opacity: .66; transform: translateX(-50%) scale(.98); }
+  50% { opacity: .94; transform: translateX(-50%) scale(1.06); }
+}
+
+@keyframes drawButtonGlow {
+  0%, 100% { opacity: .48; filter: brightness(1); }
+  50% { opacity: .84; filter: brightness(1.22); }
+}
+
+@keyframes drawButtonTap {
+  0% { transform: translateX(-50%) scale(1); }
+  18% { transform: translateX(-50%) scale(.96); }
+  100% { transform: translateX(-50%) scale(1.03); opacity: 0; }
+}
+
+@keyframes drawTouchRipple {
+  0% { opacity: .72; transform: translate(-50%, -50%) scale(.72); }
+  100% { opacity: 0; transform: translate(-50%, -50%) scale(1.7); }
+}
+
+@keyframes drawCardBrighten {
+  0% { filter: brightness(1); transform: scale(1); }
+  52% { filter: brightness(1.35); transform: scale(1.035); }
+  100% { filter: brightness(1.18); transform: scale(1.06); }
+}
+
+@keyframes drawFlipLight {
+  0%, 18% { opacity: 0; transform: translate(-50%, -50%) scale(.9); }
+  48% { opacity: .95; transform: translate(-50%, -50%) scale(1.05); }
+  100% { opacity: 0; transform: translate(-50%, -50%) scale(1.18); }
+}
+
+@keyframes drawRevealBurst {
+  0%, 28% { opacity: 0; transform: translate(-50%, -50%) scale(.82); }
+  58% { opacity: .72; transform: translate(-50%, -50%) scale(1.05); }
+  100% { opacity: 0; transform: translate(-50%, -50%) scale(1.28); }
+}
+
+@keyframes drawPageReveal {
+  0% { transform: scale(1); opacity: 1; }
+  76% { transform: scale(1.04); opacity: .95; }
+  100% { transform: scale(1.06); opacity: 0; }
+}
+
+@media (max-height: 780px) {
+  .draw-copy {
+    top: calc(38px + env(safe-area-inset-top));
+    gap: 5px;
+  }
+
+  .draw-copy h2 {
+    margin-top: 8px;
+    font-size: clamp(27px, 7.6vw, 34px);
+    line-height: 1.22;
+  }
+
+  .draw-subtitle {
+    font-size: 12px;
+    line-height: 1.55;
+  }
+
+  .draw-card-artifact {
+    top: 53%;
+    width: min(258px, 67vw);
+    height: min(376px, 47dvh);
+  }
+
+  .draw-button {
+    bottom: calc(116px + env(safe-area-inset-bottom));
+    width: min(286px, 76vw);
+    height: 66px;
+  }
+
+  .draw-button span {
+    padding-top: 10px;
+    font-size: 17px;
+  }
+
+  .draw-bottom-copy {
+    bottom: calc(26px + env(safe-area-inset-bottom));
+  }
+}

@@ -338,24 +338,71 @@ function enterChoosePath(path, next) {
 
 function renderDrawBack() {
   drawCard = randomCard();
+  const asset = "./assets/screen-05-draw-card";
   screen("", `
-    <section class="screen center">
-      <div class="topbar" style="width:100%;">
-        <button class="ghost-icon" type="button" id="backModes" aria-label="返回">‹</button>
+    <section class="screen draw-screen">
+      <img class="draw-bg-layer" src="${asset}/draw-iceberg-cave-bg.webp" alt="" aria-hidden="true">
+      <img class="draw-top-light-layer" src="${asset}/draw-top-light.png" alt="" aria-hidden="true" loading="lazy">
+      <img class="draw-particle-layer" src="${asset}/draw-particle.png" alt="" aria-hidden="true" loading="lazy">
+      <img class="draw-floating-crystal-layer" src="${asset}/draw-floating-crystal.png" alt="" aria-hidden="true" loading="lazy">
+      <img class="draw-mist-layer" src="${asset}/draw-mist-layer.png" alt="" aria-hidden="true" loading="lazy">
+      <img class="draw-bubble-layer" src="${asset}/draw-bubble-layer.png" alt="" aria-hidden="true" loading="lazy">
+      <button class="draw-back-button" type="button" id="backModes" aria-label="返回上一页">
+        <img src="${asset}/draw-back-arrow.png" alt="" aria-hidden="true">
+      </button>
+      <div class="draw-copy">
+        <p class="draw-eyebrow">ICEBERG EXPLORATION</p>
+        <p class="draw-section">03 · 今日一抽</p>
+        <p class="draw-english">ONE CARD · ONE MOMENT</p>
+        <h2>此刻的冰山，<br>想让你看见什么？</h2>
+        <p class="draw-subtitle">不需要寻找正确答案。<br>只需要，允许一张卡来到你面前。</p>
       </div>
-      <div class="card-back" id="flipCard" role="button" tabindex="0">
-        <div class="iceberg-wrap" style="min-height:210px;">${icebergMarkup()}</div>
-        <h2>看见冰山下的我</h2>
-        <p class="soft">轻触卡牌</p>
+      <button class="draw-card-artifact" id="flipCard" type="button" aria-label="轻触卡牌，看见此刻的自己">
+        <img class="draw-card-shadow" src="${asset}/draw-card-shadow.png" alt="" aria-hidden="true" loading="lazy">
+        <img class="draw-water-reflection" src="${asset}/draw-water-reflection.png" alt="" aria-hidden="true" loading="lazy">
+        <img class="draw-portal-ring" src="${asset}/draw-portal-ring.png" alt="" aria-hidden="true" loading="lazy">
+        <span class="draw-card-stack" aria-hidden="true">
+          <img class="draw-card-layer draw-card-aura" src="${asset}/draw-card-aura-soft.png" alt="">
+          <img class="draw-card-layer draw-card-body" src="${asset}/draw-card-body.png" alt="">
+          <img class="draw-card-layer draw-card-frost" src="${asset}/draw-card-frost-texture.png" alt="">
+          <img class="draw-card-layer draw-card-inner" src="${asset}/draw-card-inner-glass.png" alt="">
+          <img class="draw-card-layer draw-card-iceberg" src="${asset}/draw-card-iceberg.png" alt="">
+          <img class="draw-card-layer draw-card-scan" src="${asset}/draw-card-scan-ring.png" alt="">
+          <img class="draw-card-layer draw-card-core" src="${asset}/draw-card-core-light.png" alt="">
+          <img class="draw-card-layer draw-card-breathing" src="${asset}/draw-card-breathing-light.png" alt="">
+          <img class="draw-card-layer draw-card-edge" src="${asset}/draw-card-edge-glow.png" alt="">
+          <img class="draw-card-layer draw-card-reflection" src="${asset}/draw-card-reflection.png" alt="">
+          <img class="draw-card-layer draw-card-dust" src="${asset}/draw-card-star-dust.png" alt="">
+          <img class="draw-card-layer draw-card-sweep" src="${asset}/draw-card-light-sweep.png" alt="">
+          <img class="draw-card-layer draw-card-flip-light" src="${asset}/draw-card-flip-light.png" alt="">
+          <img class="draw-card-layer draw-card-reveal-burst" src="${asset}/draw-card-reveal-burst.png" alt="">
+        </span>
+      </button>
+      <button class="draw-button" id="drawRevealBtn" type="button">
+        <img class="draw-button-bg" src="${asset}/draw-button-bg.png" alt="" aria-hidden="true">
+        <img class="draw-button-glow" src="${asset}/draw-button-glow.png" alt="" aria-hidden="true">
+        <span>轻触卡牌<br>看见此刻的自己</span>
+        <img class="draw-button-arrow" src="${asset}/draw-button-arrow.png" alt="" aria-hidden="true">
+        <img class="draw-touch-ripple" src="${asset}/draw-touch-ripple.png" alt="" aria-hidden="true">
+      </button>
+      <div class="draw-bottom-copy">
+        <span>✥</span>
+        <p>今天，只看见自己一点点。</p>
+        <small>ONE MOMENT OF SEEING</small>
       </div>
+      <img class="draw-bottom-crystal-layer" src="${asset}/draw-bottom-crystal.png" alt="" aria-hidden="true" loading="lazy">
+      <img class="draw-bottom-energy-layer" src="${asset}/draw-bottom-energy-gate.png" alt="" aria-hidden="true" loading="lazy">
     </section>
   `);
   document.querySelector("#backModes").addEventListener("click", renderModes);
-  const flipCard = document.querySelector("#flipCard");
-  flipCard.addEventListener("click", () => renderDrawCard(drawCard));
-  flipCard.addEventListener("keydown", (event) => {
-    if (event.key === "Enter" || event.key === " ") renderDrawCard(drawCard);
-  });
+  const revealCard = () => {
+    const screenEl = document.querySelector(".draw-screen");
+    if (!screenEl || screenEl.classList.contains("draw-revealing")) return;
+    screenEl.classList.add("draw-revealing");
+    setTimeout(() => renderDrawCard(drawCard), prefersReducedMotion ? 20 : 1500);
+  };
+  document.querySelector("#flipCard").addEventListener("click", revealCard);
+  document.querySelector("#drawRevealBtn").addEventListener("click", revealCard);
 }
 
 function renderDrawCard(card) {

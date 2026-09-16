@@ -35,7 +35,11 @@ const checks = [
   ["choose screen uses layered assets", app.includes("choose-bg.webp") && app.includes("choose-particle.png") && app.includes("choose-bottom-crystal.png") && app.includes("choose-crystal-center.png") && app.includes("choose-card-today.png") && app.includes("choose-card-deep.png") && app.includes("choose-card-glow.png")],
   ["choose arrows are independent assets", app.includes("choose-arrow-icon1.png") && app.includes("choose-arrow-icon2.png")],
   ["choose reference not displayed", !app.includes("choose-reference.webp")],
-  ["choose paths keep existing destinations", app.includes('enterChoosePath("today", renderDrawBack)') && app.includes('enterChoosePath("deep", startJourney)')]
+  ["choose paths keep existing destinations", app.includes('enterChoosePath("today", renderDrawBack)') && app.includes('enterChoosePath("deep", startJourney)')],
+  ["draw screen uses layered assets", app.includes("draw-iceberg-cave-bg.webp") && app.includes("draw-card-aura-soft.png") && app.includes("draw-card-body.png") && app.includes("draw-card-inner-glass.png") && app.includes("draw-card-iceberg.png") && app.includes("draw-card-scan-ring.png") && app.includes("draw-card-core-light.png")],
+  ["draw button uses layered assets", app.includes("draw-button-bg.png") && app.includes("draw-button-glow.png") && app.includes("draw-button-arrow.png") && app.includes("draw-touch-ripple.png")],
+  ["draw reference not displayed", !app.includes("draw-screen-reference.webp")],
+  ["draw reveal enters card result", app.includes("draw-revealing") && app.includes("renderDrawCard(drawCard)")]
 ];
 
 const failed = checks.filter(([, ok]) => !ok);
