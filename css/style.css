@@ -899,3 +899,335 @@ h1 {
     height: 64px;
   }
 }
+
+/* Pass screen 01: layered asset-based layout from the 390 x 844 CSS design baseline. */
+.pass-art-screen {
+  isolation: isolate;
+  justify-content: flex-start;
+  padding: calc(34px + env(safe-area-inset-top)) 26px calc(22px + env(safe-area-inset-bottom));
+  background: #0d4f91;
+  overflow: hidden;
+  transform-origin: 50% 43%;
+}
+
+.pass-art-screen::before,
+.pass-art-screen::after {
+  display: none;
+}
+
+.pass-bg-layer,
+.pass-decor-layer,
+.pass-iceberg-layer {
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.pass-bg-layer,
+.pass-decor-layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  pointer-events: none;
+}
+
+.pass-bg-layer {
+  z-index: -3;
+}
+
+.pass-decor-layer {
+  z-index: -1;
+  opacity: .92;
+  animation: passDecorFloat 8s ease-in-out infinite;
+}
+
+.pass-content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  min-height: calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 56px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.pass-content .pass-title {
+  margin: 0;
+  animation: passFadeUp .7s ease both;
+}
+
+.pass-content .pass-title .english {
+  margin-bottom: 8px;
+  font-size: 12px;
+  letter-spacing: .32em;
+  color: #164b91;
+  text-shadow: 0 1px 18px rgba(255,255,255,.82);
+}
+
+.pass-content h1 {
+  margin: 0;
+  font-size: 30px;
+  line-height: 1.1;
+  font-weight: 800;
+  color: #123f86;
+  text-shadow: 0 2px 18px rgba(255,255,255,.95);
+}
+
+.pass-key-copy {
+  margin: 12px 0 0;
+  font-size: 15px;
+  line-height: 1.75;
+  font-weight: 700;
+  color: rgba(18,62,131,.86);
+  text-shadow: 0 2px 14px rgba(255,255,255,.9);
+  animation: passFadeUp .78s .04s ease both;
+}
+
+.pass-iceberg-stage {
+  position: relative;
+  width: min(330px, 88vw);
+  height: clamp(250px, 39dvh, 335px);
+  margin: clamp(4px, 1.5dvh, 16px) auto 0;
+  pointer-events: none;
+  animation: passFadeUp .8s .08s ease both;
+}
+
+.pass-iceberg-layer {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 390px;
+  max-width: 118%;
+  height: auto;
+  transform: translate(-50%, -50%);
+  filter: drop-shadow(0 24px 30px rgba(4,54,110,.22)) brightness(1.02);
+  animation: passIcebergFloat 6.4s ease-in-out infinite;
+}
+
+.pass-iceberg-glow {
+  position: absolute;
+  left: 50%;
+  top: 54%;
+  width: 112px;
+  height: 112px;
+  border-radius: 50%;
+  transform: translate(-50%, -50%) scale(.72);
+  background: radial-gradient(circle, rgba(207,190,255,.55), rgba(101,201,239,.28) 42%, transparent 70%);
+  filter: blur(6px);
+  opacity: .48;
+  mix-blend-mode: screen;
+  animation: passGlowBreathe 5.8s ease-in-out infinite;
+}
+
+.pass-help {
+  margin: clamp(-6px, -1dvh, 4px) 0 13px;
+  font-size: 14px;
+  line-height: 1.72;
+  font-weight: 700;
+  color: rgba(255,255,255,.94);
+  text-shadow: 0 2px 12px rgba(5,43,88,.32);
+  animation: passFadeUp .8s .12s ease both;
+}
+
+.pass-code-grid {
+  width: min(318px, 86vw);
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 10px;
+  margin: 0;
+  animation: passFadeUp .8s .16s ease both;
+}
+
+.pass-code-grid .pass-digit-input {
+  width: 100%;
+  aspect-ratio: 1;
+  min-width: 0;
+  border: 1px solid rgba(255,255,255,.92);
+  border-radius: 10px;
+  background:
+    linear-gradient(145deg, rgba(255,255,255,.96), rgba(218,245,255,.78) 45%, rgba(255,255,255,.86));
+  box-shadow:
+    0 10px 18px rgba(5,52,107,.16),
+    inset 0 1px 0 rgba(255,255,255,.96),
+    inset 0 -8px 18px rgba(101,201,239,.1);
+  color: #103f84;
+  font-size: 24px;
+  font-weight: 800;
+  line-height: 1;
+  text-align: center;
+  outline: 0;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.pass-code-grid .pass-digit-input:focus {
+  border-color: rgba(214,205,255,.96);
+  box-shadow:
+    0 0 0 3px rgba(255,255,255,.3),
+    0 0 24px rgba(194,177,255,.62),
+    0 12px 22px rgba(5,52,107,.2),
+    inset 0 1px 0 rgba(255,255,255,.98);
+}
+
+.pass-art-screen .pass-error {
+  width: min(320px, 86vw);
+  min-height: 58px;
+  margin: 10px 0 0;
+  padding: 8px 12px;
+  color: rgba(79,56,111,.86);
+  background: linear-gradient(180deg, rgba(255,255,255,.58), rgba(228,239,255,.36));
+  border: 1px solid rgba(255,255,255,.45);
+  border-radius: 16px;
+  box-shadow: 0 8px 18px rgba(22,58,112,.08);
+  backdrop-filter: blur(10px);
+}
+
+.pass-art-screen .pass-error:empty {
+  opacity: 0;
+}
+
+.pass-art-screen .pass-error strong {
+  color: rgba(79,56,111,.92);
+}
+
+.pass-enter-button {
+  width: min(320px, 86vw);
+  min-height: 56px;
+  margin-top: 8px;
+  border: 1px solid rgba(255,255,255,.86);
+  border-radius: 28px;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.82), rgba(215,245,255,.76) 42%, rgba(255,255,255,.9)),
+    radial-gradient(circle at 82% 12%, rgba(230,197,222,.62), transparent 34%);
+  color: #104385;
+  font-size: 16px;
+  font-weight: 800;
+  box-shadow:
+    0 14px 24px rgba(4,54,110,.22),
+    0 0 28px rgba(217,202,255,.28),
+    inset 0 1px 0 rgba(255,255,255,.98),
+    inset 0 -12px 24px rgba(101,201,239,.14);
+  text-shadow: 0 1px 0 rgba(255,255,255,.8);
+  animation: passButtonBreathe 3.8s ease-in-out infinite, passFadeUp .8s .2s ease both;
+  transition: transform .12s ease, filter .12s ease;
+}
+
+.pass-enter-button:active {
+  transform: scale(.98);
+  filter: brightness(.98);
+}
+
+.pass-footnote {
+  margin: auto 0 0;
+  padding-top: 14px;
+  font-size: 12px;
+  line-height: 1.65;
+  color: rgba(255,255,255,.88);
+  text-shadow: 0 2px 10px rgba(4,38,82,.36);
+  animation: passFadeUp .8s .24s ease both;
+}
+
+.pass-unlocking {
+  animation: passUnlockZoom .9s ease forwards;
+}
+
+.pass-unlocking .pass-iceberg-glow {
+  animation: passUnlockGlow .9s ease forwards;
+}
+
+@keyframes passFadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes passIcebergFloat {
+  0%, 100% {
+    transform: translate(-50%, calc(-50% - 4px));
+    filter: drop-shadow(0 24px 30px rgba(4,54,110,.2)) brightness(1);
+  }
+  50% {
+    transform: translate(-50%, calc(-50% + 4px));
+    filter: drop-shadow(0 28px 34px rgba(4,54,110,.24)) brightness(1.06);
+  }
+}
+
+@keyframes passGlowBreathe {
+  0%, 100% { opacity: .36; transform: translate(-50%, -50%) scale(.72); }
+  50% { opacity: .62; transform: translate(-50%, -50%) scale(.9); }
+}
+
+@keyframes passDecorFloat {
+  0%, 100% { transform: translate3d(0, -3px, 0); opacity: .86; }
+  50% { transform: translate3d(0, 4px, 0); opacity: .98; }
+}
+
+@keyframes passButtonBreathe {
+  0%, 100% { box-shadow: 0 14px 24px rgba(4,54,110,.2), 0 0 22px rgba(217,202,255,.22), inset 0 1px 0 rgba(255,255,255,.98), inset 0 -12px 24px rgba(101,201,239,.12); }
+  50% { box-shadow: 0 16px 28px rgba(4,54,110,.24), 0 0 34px rgba(217,202,255,.44), inset 0 1px 0 rgba(255,255,255,.98), inset 0 -12px 24px rgba(101,201,239,.18); }
+}
+
+@keyframes passUnlockGlow {
+  0% { opacity: .48; transform: translate(-50%, -50%) scale(.72); }
+  45% { opacity: .95; transform: translate(-50%, -50%) scale(1.36); }
+  100% { opacity: 0; transform: translate(-50%, -50%) scale(1.9); }
+}
+
+@keyframes passUnlockZoom {
+  0% { transform: scale(1); opacity: 1; }
+  74% { transform: scale(1.04); opacity: .94; }
+  100% { transform: scale(1.04); opacity: 0; }
+}
+
+@media (max-height: 760px) {
+  .pass-art-screen {
+    padding-top: calc(22px + env(safe-area-inset-top));
+    padding-bottom: calc(14px + env(safe-area-inset-bottom));
+  }
+
+  .pass-content h1 {
+    font-size: 27px;
+  }
+
+  .pass-key-copy {
+    margin-top: 8px;
+    font-size: 14px;
+    line-height: 1.55;
+  }
+
+  .pass-iceberg-stage {
+    height: clamp(210px, 34dvh, 280px);
+  }
+
+  .pass-help {
+    margin-bottom: 9px;
+    line-height: 1.55;
+  }
+
+  .pass-art-screen .pass-error {
+    min-height: 45px;
+    font-size: 12px;
+  }
+
+  .pass-footnote {
+    padding-top: 8px;
+    line-height: 1.45;
+  }
+}
+
+@media (max-width: 360px) {
+  .pass-art-screen {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .pass-code-grid {
+    gap: 7px;
+  }
+
+  .pass-content h1 {
+    font-size: 27px;
+  }
+}

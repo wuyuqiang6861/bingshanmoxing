@@ -10,8 +10,8 @@ const checks = [
   ["relative module path", html.includes('src="./js/app.js"')],
   ["numeric keyboard inputmode", app.includes('inputmode="numeric"')],
   ["numeric input pattern", app.includes('pattern="[0-9]*"')],
-  ["six digit maxlength", app.includes('maxlength="6"')],
-  ["hidden single input", app.includes('id="passInput"') && app.includes('digit-box')],
+  ["single digit maxlength", app.includes('maxlength="1"')],
+  ["six real input slots", app.includes('pass-digit-input') && app.includes('Array.from({ length: 6 }')],
   ["automatic six digit validation", app.includes('passValue.length === 6') && app.includes('tryPasscode(true)')],
   ["access localStorage key", storage.includes('"iceberg_access"')],
   ["pass localStorage key", storage.includes('"iceberg_pass"')],
@@ -20,8 +20,10 @@ const checks = [
   ["clear access separate from records", storage.includes("clearAccess") && !/function clearAccess\(\)[\s\S]*iceberg_records/.test(storage)],
   ["validation layer separated", passcodes.includes("export function validatePasscode")],
   ["no absolute asset paths", !/(href|src)="\/(?!\/)/.test(html)],
-  ["soft error language", app.includes("这个通行码似乎没有找到对应的冰山。") && app.includes("#B76E79") === false],
-  ["database summary only", passcodes.includes("Iceberg Passcode Database") && !passcodes.includes("console.table")]
+  ["soft error language", app.includes("这把钥匙暂时没有打开冰山") && app.includes("#B76E79") === false],
+  ["database summary only", passcodes.includes("Iceberg Passcode Database") && !passcodes.includes("console.table")],
+  ["pass screen uses layered assets", app.includes("pass-bg.webp") && app.includes("pass-crystal-decor.webp") && app.includes("pass-iceberg.webp")],
+  ["reference not used as page background", !app.includes("pass-ui-reference.webp")]
 ];
 
 const failed = checks.filter(([, ok]) => !ok);

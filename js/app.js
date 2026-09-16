@@ -34,53 +34,87 @@ function icebergMarkup() {
 }
 
 function focusPassInput() {
-  const input = document.querySelector("#passInput");
+  const input = document.querySelector(".pass-digit-input");
   if (input) input.focus({ preventScroll: true });
 }
 
 function renderPass() {
   passValue = "";
   screen("", `
-    <section class="screen pass-screen center">
-      <div class="spacer"></div>
-      <div class="stack">
+    <section class="screen pass-screen pass-art-screen center">
+      <img class="pass-bg-layer" src="./assets/pass/pass-bg.webp" alt="" aria-hidden="true">
+      <img class="pass-decor-layer" src="./assets/pass/pass-crystal-decor.webp" alt="" aria-hidden="true">
+      <div class="pass-content">
         <div class="pass-title">
           <p class="english eyebrow">ICEBERG PASS</p>
           <h1>冰山探索通行码</h1>
         </div>
-        <p class="subcopy">每一座冰山，<br>都有一把通往内在的钥匙。</p>
-        <div class="iceberg-wrap success-orbit">${icebergMarkup()}</div>
-        <p class="soft">请输入随产品获得的<br>6位数字通行码。</p>
-        <input id="passInput" class="pass-input" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="6" autocomplete="one-time-code" aria-label="冰山探索通行码">
-        <button id="digitRow" class="digit-row" type="button" aria-label="输入冰山探索通行码">
-          ${Array.from({ length: 6 }, (_, i) => `<span class="digit-box empty" data-digit="${i}"></span>`).join("")}
-        </button>
+        <p class="pass-key-copy">每一座冰山<br>都有一把通往内在的钥匙。</p>
+        <div class="pass-iceberg-stage" aria-hidden="true">
+          <img class="pass-iceberg-layer" src="./assets/pass/pass-iceberg.webp" alt="">
+          <span class="pass-iceberg-glow"></span>
+        </div>
+        <p class="pass-help">请输入随产品获得的<br>6位数字通行码</p>
+        <div id="digitRow" class="digit-row pass-code-grid" aria-label="输入冰山探索通行码">
+          ${Array.from({ length: 6 }, (_, i) => `
+            <input
+              class="digit-box pass-digit-input"
+              data-index="${i}"
+              type="text"
+              inputmode="numeric"
+              pattern="[0-9]*"
+              maxlength="1"
+              autocomplete="${i === 0 ? "one-time-code" : "off"}"
+              aria-label="通行码第${i + 1}位"
+            >
+          `).join("")}
+        </div>
         <div id="passMessage" class="pass-error" aria-live="polite"></div>
-        <button id="openButton" class="primary" type="button">开启冰山探索</button>
-        <p class="tiny">通行码随实体产品提供。</p>
+        <button id="openButton" class="primary pass-enter-button" type="button">开启冰山探索 <span aria-hidden="true">→</span></button>
+        <p class="pass-footnote">通行码随实体产品提供<br>一座冰山，一次向内的邀请。</p>
       </div>
-      <div class="spacer"></div>
     </section>
   `);
 
-  const input = document.querySelector("#passInput");
-  document.querySelector("#digitRow").addEventListener("click", focusPassInput);
+  const inputs = Array.from(document.querySelectorAll(".pass-digit-input"));
   document.querySelector("#openButton").addEventListener("click", () => tryPasscode(false));
-  input.addEventListener("input", () => {
-    passValue = input.value.replace(/\D/g, "").slice(0, 6);
-    input.value = passValue;
-    paintDigits();
-    if (passValue.length === 6) tryPasscode(true);
+
+  inputs.forEach((input, index) => {
+    input.addEventListener("input", () => {
+      const digit = input.value.replace(/\D/g, "").slice(-1);
+      input.value = digit;
+      syncPassValue();
+      if (digit && index < inputs.length - 1) inputs[index + 1].focus();
+      if (passValue.length === 6) tryPasscode(true);
+    });
+
+    input.addEventListener("keydown", (event) => {
+      if (event.key === "Backspace" && !input.value && index > 0) {
+        inputs[index - 1].focus();
+        inputs[index - 1].value = "";
+        syncPassValue();
+      }
+    });
+
+    input.addEventListener("paste", (event) => {
+      event.preventDefault();
+      const pasted = event.clipboardData.getData("text").replace(/\D/g, "").slice(0, 6);
+      if (!pasted) return;
+      inputs.forEach((slot, slotIndex) => {
+        slot.value = pasted[slotIndex] || "";
+      });
+      syncPassValue();
+      const nextIndex = Math.min(pasted.length, inputs.length) - 1;
+      inputs[Math.max(nextIndex, 0)].focus();
+      if (passValue.length === 6) tryPasscode(true);
+    });
   });
+
   setTimeout(focusPassInput, 240);
 }
 
-function paintDigits() {
-  document.querySelectorAll(".digit-box").forEach((box, index) => {
-    const value = passValue[index] || "";
-    box.textContent = value;
-    box.classList.toggle("empty", !value);
-  });
+function syncPassValue() {
+  passValue = Array.from(document.querySelectorAll(".pass-digit-input")).map((input) => input.value).join("");
 }
 
 function tryPasscode(auto) {
@@ -91,13 +125,13 @@ function tryPasscode(auto) {
 
   if (validatePasscode(passValue)) {
     activateAccess(passValue);
+    document.querySelector(".pass-art-screen")?.classList.add("pass-unlocking");
     document.querySelector("#digitRow")?.classList.add("fade-out");
-    document.querySelector(".iceberg-wrap")?.classList.add("success-orbit");
-    setTimeout(renderPassSuccess, prefersReducedMotion ? 20 : 800);
+    setTimeout(renderPassSuccess, prefersReducedMotion ? 20 : 900);
     return;
   }
 
-  showPassError("这个通行码似乎没有找到对应的冰山。", "请检查数字是否输入正确，<br>再试一次。");
+  showPassError("这把钥匙暂时没有打开冰山，", "请再确认一次通行码。");
 }
 
 function showPassError(title, detail = "") {
@@ -109,9 +143,10 @@ function showPassError(title, detail = "") {
   row.classList.add("shake");
   document.querySelector("#retryPass").addEventListener("click", () => {
     passValue = "";
-    document.querySelector("#passInput").value = "";
+    document.querySelectorAll(".pass-digit-input").forEach((input) => {
+      input.value = "";
+    });
     message.innerHTML = "";
-    paintDigits();
     focusPassInput();
   });
 }
