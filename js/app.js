@@ -159,7 +159,6 @@ function renderPassSuccess() {
       <button class="welcome-iceberg-stage" id="welcomeIceberg" type="button" aria-label="轻触冰山，开始向内">
         <span class="welcome-reflection" aria-hidden="true"></span>
         <img class="welcome-iceberg-layer" src="./assets/welcome/welcome-iceberg.png" alt="">
-        <img class="welcome-light-layer" src="./assets/welcome/welcome-light-core.png" alt="" aria-hidden="true">
         <span class="welcome-ripple" aria-hidden="true"></span>
       </button>
       <img class="welcome-touch-layer" src="./assets/welcome/welcome-touch.png" alt="" aria-hidden="true">

@@ -1279,7 +1279,6 @@ h1 {
 .welcome-bg-layer,
 .welcome-decor-layer,
 .welcome-iceberg-layer,
-.welcome-light-layer,
 .welcome-touch-layer {
   user-select: none;
   -webkit-user-drag: none;
@@ -1374,8 +1373,31 @@ h1 {
   animation: welcomeIcebergIntro .8s .8s ease-out both, welcomeIcebergFloat 7.2s 1.65s ease-in-out infinite;
 }
 
-.welcome-iceberg-layer,
-.welcome-light-layer {
+.welcome-iceberg-stage::before {
+  content: "";
+  position: absolute;
+  z-index: 2;
+  left: 50%;
+  top: 50%;
+  width: min(172px, 44vw);
+  height: min(390px, 47dvh);
+  transform: translate(-50%, -48%);
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at 50% 45%, rgba(255,255,255,.92), rgba(214,247,255,.56) 22%, rgba(205,190,255,.28) 42%, transparent 70%),
+    linear-gradient(180deg, transparent 0%, rgba(255,255,255,.72) 36%, rgba(230,197,222,.34) 58%, transparent 100%);
+  clip-path: polygon(47% 0, 64% 36%, 55% 100%, 39% 56%, 30% 24%);
+  opacity: .64;
+  mix-blend-mode: screen;
+  filter:
+    blur(1.2px)
+    brightness(1.06)
+    drop-shadow(0 0 18px rgba(101,201,239,.38))
+    drop-shadow(0 0 28px rgba(205,190,255,.28));
+  animation: welcomeCoreBreathe 4.2s ease-in-out infinite;
+}
+
+.welcome-iceberg-layer {
   position: absolute;
   left: 50%;
   top: 50%;
@@ -1386,18 +1408,13 @@ h1 {
 }
 
 .welcome-iceberg-layer {
+  z-index: 1;
   filter: drop-shadow(0 26px 34px rgba(5,45,95,.24));
-}
-
-.welcome-light-layer {
-  opacity: .56;
-  mix-blend-mode: screen;
-  filter: brightness(1.08) drop-shadow(0 0 22px rgba(197,190,255,.46));
-  animation: welcomeCoreBreathe 4.2s ease-in-out infinite;
 }
 
 .welcome-reflection {
   position: absolute;
+  z-index: 0;
   left: 50%;
   top: 49%;
   width: min(310px, 82vw);
@@ -1414,6 +1431,7 @@ h1 {
 
 .welcome-ripple {
   position: absolute;
+  z-index: 3;
   left: 50%;
   top: 50%;
   width: 190px;
@@ -1482,7 +1500,7 @@ h1 {
   animation: welcomeEnterZoom 1.2s ease forwards;
 }
 
-.welcome-entering .welcome-light-layer {
+.welcome-entering .welcome-iceberg-stage::before {
   animation: welcomeCoreOpen 1.2s ease forwards;
 }
 

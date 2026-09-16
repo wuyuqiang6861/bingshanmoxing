@@ -24,7 +24,7 @@ const checks = [
   ["database summary only", passcodes.includes("Iceberg Passcode Database") && !passcodes.includes("console.table")],
   ["pass screen uses layered assets", app.includes("pass-bg.webp") && app.includes("pass-crystal-decor.webp") && app.includes("pass-iceberg.webp")],
   ["reference not used as page background", !app.includes("pass-ui-reference.webp")],
-  ["welcome screen uses layered assets", app.includes("welcome-bg.webp") && app.includes("welcome-crystal-decor.png") && app.includes("welcome-iceberg.png") && app.includes("welcome-light-core.png") && app.includes("welcome-touch.png")],
+  ["welcome screen uses layered assets", app.includes("welcome-bg.webp") && app.includes("welcome-crystal-decor.png") && app.includes("welcome-iceberg.png") && app.includes("welcome-touch.png")],
   ["welcome reference not displayed", !app.includes("welcome-reference.webp")]
 ];
 
