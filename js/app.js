@@ -178,7 +178,7 @@ function renderPassSuccess() {
     const screenEl = document.querySelector(".welcome-screen");
     if (!screenEl || screenEl.classList.contains("welcome-entering")) return;
     screenEl.classList.add("welcome-entering");
-    setTimeout(renderHome, prefersReducedMotion ? 20 : 1200);
+    setTimeout(renderEventEntry, prefersReducedMotion ? 20 : 1200);
   };
 
   document.querySelector("#welcomeIceberg").addEventListener("click", enterWelcome);
@@ -267,7 +267,7 @@ function renderEventEntry() {
   };
 
   updateCount();
-  document.querySelector("#backHome").addEventListener("click", renderHome);
+  document.querySelector("#backHome").addEventListener("click", renderPassSuccess);
   document.querySelector("#startModes").addEventListener("click", beginExplore);
   document.querySelector("#skipEvent").addEventListener("click", beginExplore);
   document.querySelector("#eventCrystal").addEventListener("click", beginExplore);
@@ -471,7 +471,7 @@ function renderComplete(choice = "") {
     </section>
   `);
   document.querySelector("#saveExplore").addEventListener("click", () => toast("这次探索已经保存在本机。"));
-  document.querySelector("#restart").addEventListener("click", renderHome);
+  document.querySelector("#restart").addEventListener("click", renderEventEntry);
 }
 
 function openAnswerSheet({ title, onSave }) {
@@ -617,5 +617,5 @@ window.IcebergPass = {
   databaseTotal: ICEBERG_PASSCODES.length
 };
 
-if (hasAccess()) renderHome();
+if (hasAccess()) renderEventEntry();
 else renderPass();

@@ -29,7 +29,9 @@ const checks = [
   ["event screen uses layered assets", app.includes("event-bg.webp") && app.includes("event-particle.png") && app.includes("event-bottom-crystal.png") && app.includes("event-portal.png") && app.includes("event-crystal-floating.png") && app.includes("event-glass-card.png")],
   ["event reference not displayed", !app.includes("event-reference.webp")],
   ["event textarea is real input", app.includes("<textarea id=\"eventText\"") && app.includes("maxlength=\"100\"")],
-  ["event transition enters modes", app.includes("event-entering") && app.includes("setTimeout(renderModes")]
+  ["event transition enters modes", app.includes("event-entering") && app.includes("setTimeout(renderModes")],
+  ["welcome enters event directly", app.includes("setTimeout(renderEventEntry, prefersReducedMotion ? 20 : 1200)")],
+  ["authorized users enter event directly", app.includes("if (hasAccess()) renderEventEntry();")]
 ];
 
 const failed = checks.filter(([, ok]) => !ok);
