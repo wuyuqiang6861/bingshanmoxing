@@ -153,19 +153,37 @@ function showPassError(title, detail = "") {
 
 function renderPassSuccess() {
   screen("", `
-    <section class="screen center">
-      <div class="spacer"></div>
-      <div class="stack success-copy">
-        <div class="iceberg-wrap success-orbit">${icebergMarkup()}</div>
-        <p class="eyebrow">ICEBERG PASS</p>
-        <h2>通行码验证成功</h2>
-        <p class="subcopy">欢迎来到冰山之下。</p>
-        <p class="soft">愿这一次探索，<br>让你更靠近真实的自己。</p>
+    <section class="screen welcome-screen center">
+      <img class="welcome-bg-layer" src="./assets/welcome/welcome-bg.webp" alt="" aria-hidden="true">
+      <img class="welcome-decor-layer" src="./assets/welcome/welcome-crystal-decor.png" alt="" aria-hidden="true">
+      <button class="welcome-iceberg-stage" id="welcomeIceberg" type="button" aria-label="轻触冰山，开始向内">
+        <span class="welcome-reflection" aria-hidden="true"></span>
+        <img class="welcome-iceberg-layer" src="./assets/welcome/welcome-iceberg.png" alt="">
+        <img class="welcome-light-layer" src="./assets/welcome/welcome-light-core.png" alt="" aria-hidden="true">
+        <span class="welcome-ripple" aria-hidden="true"></span>
+      </button>
+      <img class="welcome-touch-layer" src="./assets/welcome/welcome-touch.png" alt="" aria-hidden="true">
+      <div class="welcome-copy">
+        <p class="welcome-kicker">ICEBERG PASS</p>
+        <p class="welcome-pretitle">欢迎来到</p>
+        <h2>冰山之下</h2>
+        <p class="welcome-subtitle">愿这一次探索，<br>让你更靠近真实的自己。</p>
       </div>
-      <div class="spacer"></div>
+      <div class="welcome-actions">
+        <button class="welcome-enter-button" id="welcomeEnter" type="button">轻触冰山，开始向内 <span aria-hidden="true">→</span></button>
+      </div>
     </section>
   `);
-  setTimeout(renderHome, prefersReducedMotion ? 20 : 1800);
+
+  const enterWelcome = () => {
+    const screenEl = document.querySelector(".welcome-screen");
+    if (!screenEl || screenEl.classList.contains("welcome-entering")) return;
+    screenEl.classList.add("welcome-entering");
+    setTimeout(renderHome, prefersReducedMotion ? 20 : 1200);
+  };
+
+  document.querySelector("#welcomeIceberg").addEventListener("click", enterWelcome);
+  document.querySelector("#welcomeEnter").addEventListener("click", enterWelcome);
 }
 
 function renderHome() {
