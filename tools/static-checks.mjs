@@ -25,7 +25,11 @@ const checks = [
   ["pass screen uses layered assets", app.includes("pass-bg.webp") && app.includes("pass-crystal-decor.webp") && app.includes("pass-iceberg.webp")],
   ["reference not used as page background", !app.includes("pass-ui-reference.webp")],
   ["welcome screen uses layered assets", app.includes("welcome-bg.webp") && app.includes("welcome-crystal-decor.png") && app.includes("welcome-iceberg.png") && app.includes("welcome-touch.png")],
-  ["welcome reference not displayed", !app.includes("welcome-reference.webp")]
+  ["welcome reference not displayed", !app.includes("welcome-reference.webp")],
+  ["event screen uses layered assets", app.includes("event-bg.webp") && app.includes("event-particle.png") && app.includes("event-bottom-crystal.png") && app.includes("event-portal.png") && app.includes("event-crystal-floating.png") && app.includes("event-glass-card.png")],
+  ["event reference not displayed", !app.includes("event-reference.webp")],
+  ["event textarea is real input", app.includes("<textarea id=\"eventText\"") && app.includes("maxlength=\"100\"")],
+  ["event transition enters modes", app.includes("event-entering") && app.includes("setTimeout(renderModes")]
 ];
 
 const failed = checks.filter(([, ok]) => !ok);

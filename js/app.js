@@ -215,28 +215,65 @@ function renderHome() {
 }
 
 function renderEventEntry() {
+  const savedEvent = escapeHtml(getEventText().slice(0, 100));
   screen("", `
-    <section class="screen">
-      <div class="topbar">
-        <button class="ghost-icon" type="button" id="backHome" aria-label="返回">‹</button>
+    <section class="screen event-screen">
+      <img class="event-bg-layer" src="./assets/event/event-bg.webp" alt="" aria-hidden="true">
+      <img class="event-particle-layer" src="./assets/event/event-particle.png" alt="" aria-hidden="true">
+      <img class="event-bottom-layer" src="./assets/event/event-bottom-crystal.png" alt="" aria-hidden="true">
+      <div class="event-topbar">
+        <button class="event-back" type="button" id="backHome" aria-label="返回">‹</button>
+        <div class="event-index">
+          <span>ICEBERG EXPLORATION</span>
+          <strong>01｜触动</strong>
+        </div>
       </div>
-      <div class="stack" style="margin-top: 34px;">
-        <h2>此刻，什么正在触动你？</h2>
-        <textarea id="eventText" class="field" placeholder="用一句话写下今天发生的事……">${escapeHtml(getEventText())}</textarea>
-        <p class="tiny">例如：“今天他说了一句话，让我很难受。”</p>
+      <div class="event-copy">
+        <p class="event-kicker">WHAT IS TOUCHING YOU NOW?</p>
+        <h2>此刻，<br>什么正在触动你？</h2>
+        <p>先不急着解释，<br>只需要想起一件<br>此刻仍停留在你心里的事。</p>
       </div>
-      <div class="spacer"></div>
-      <div class="bottom-actions">
-        <button class="primary" id="startModes" type="button">带着这件事，开始探索</button>
-        <p class="tiny center">暂时不想写，也可以直接开始。</p>
+      <button class="event-crystal-stage" id="eventCrystal" type="button" aria-label="触碰水晶开始探索">
+        <img class="event-portal-layer" src="./assets/event/event-portal.png" alt="" aria-hidden="true">
+        <img class="event-crystal-layer" src="./assets/event/event-crystal-floating.png" alt="">
+        <span class="event-wave" aria-hidden="true"></span>
+      </button>
+      <div class="event-card-wrap" id="eventCard">
+        <img class="event-card-texture" src="./assets/event/event-glass-card.png" alt="" aria-hidden="true">
+        <div class="event-card-content">
+          <label for="eventText">用一句话，<br>写下今天发生的事……</label>
+          <textarea id="eventText" maxlength="100" placeholder="例如：今天他说了一句话，&#10;让我突然很难受。">${savedEvent}</textarea>
+          <div class="event-count"><span id="eventCount">0</span> / 100</div>
+        </div>
+      </div>
+      <div class="event-actions">
+        <button class="event-start-button" id="startModes" type="button">带着这件事，开始探索 <span aria-hidden="true">→</span></button>
+        <button class="event-skip-button" id="skipEvent" type="button">暂时不想写，<br>也可以直接开始</button>
       </div>
     </section>
   `);
+
+  const textarea = document.querySelector("#eventText");
+  const count = document.querySelector("#eventCount");
+  const screenEl = document.querySelector(".event-screen");
+  const updateCount = () => {
+    count.textContent = String(textarea.value.length);
+  };
+  const beginExplore = () => {
+    if (screenEl.classList.contains("event-entering")) return;
+    saveEventText(textarea.value.trim());
+    screenEl.classList.add("event-entering");
+    setTimeout(renderModes, prefersReducedMotion ? 20 : 1200);
+  };
+
+  updateCount();
   document.querySelector("#backHome").addEventListener("click", renderHome);
-  document.querySelector("#startModes").addEventListener("click", () => {
-    saveEventText(document.querySelector("#eventText").value.trim());
-    renderModes();
-  });
+  document.querySelector("#startModes").addEventListener("click", beginExplore);
+  document.querySelector("#skipEvent").addEventListener("click", beginExplore);
+  document.querySelector("#eventCrystal").addEventListener("click", beginExplore);
+  textarea.addEventListener("input", updateCount);
+  textarea.addEventListener("focus", () => screenEl.classList.add("event-writing"));
+  textarea.addEventListener("blur", () => screenEl.classList.remove("event-writing"));
 }
 
 function renderModes() {
