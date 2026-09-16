@@ -278,30 +278,62 @@ function renderEventEntry() {
 
 function renderModes() {
   screen("", `
-    <section class="screen">
-      <div class="topbar">
-        <button class="ghost-icon" type="button" id="backEvent" aria-label="返回">‹</button>
+    <section class="screen choose-screen">
+      <img class="choose-bg-layer" src="./assets/choose/choose-bg.webp" alt="" aria-hidden="true">
+      <img class="choose-particle-layer" src="./assets/choose/choose-particle.png" alt="" aria-hidden="true">
+      <img class="choose-bottom-layer" src="./assets/choose/choose-bottom-crystal.png" alt="" aria-hidden="true">
+      <div class="choose-topbar">
+        <button class="choose-back" type="button" id="backEvent" aria-label="返回">‹</button>
+        <div class="choose-index">
+          <span>ICEBERG EXPLORATION</span>
+          <strong>02｜选择</strong>
+        </div>
       </div>
-      <div class="stack" style="margin-top: 26px;">
-        <h2>选择今天的探索方式</h2>
-        <button class="mode-card" id="drawMode" type="button">
-          <h3>今日一抽</h3>
-          <p class="subcopy">今天，<br>只看见自己一点点。</p>
-          <span class="time">约1-3分钟</span>
-          <span class="primary">抽一张</span>
+      <div class="choose-copy">
+        <p class="choose-kicker">CHOOSE HOW DEEP YOU WANT TO GO</p>
+        <h2>选择你的<br>探索方式</h2>
+        <p>同一件事，<br>不同的相遇方式。</p>
+      </div>
+      <div class="choose-crystal-stage" aria-hidden="true">
+        <img class="choose-crystal-layer" src="./assets/choose/choose-crystal-center.png" alt="">
+      </div>
+      <p class="choose-bridge">带着此刻正在触动你的事，<br>选择一条向内的路。</p>
+      <div class="choose-card-list">
+        <button class="choose-card choose-card-today" id="drawMode" type="button">
+          <img class="choose-card-texture" src="./assets/choose/choose-card-today.png" alt="" aria-hidden="true">
+          <img class="choose-card-glow" src="./assets/choose/choose-card-glow.png" alt="" aria-hidden="true">
+          <span class="choose-card-copy">
+            <strong>今日一抽</strong>
+            <span>今天，<br>只看见自己一点点。</span>
+            <em>◷ 约1-3分钟</em>
+            <small>ONE CARD · ONE MOMENT</small>
+          </span>
+          <img class="choose-arrow choose-arrow-today" src="./assets/choose/choose-arrow-icon1.png" alt="" aria-hidden="true">
         </button>
-        <button class="mode-card" id="journeyMode" type="button">
-          <h3>完整冰山探索</h3>
-          <p class="subcopy">从水面之上，<br>一层层回到自己。</p>
-          <span class="time">约10-15分钟</span>
-          <span class="primary">开始探索</span>
+        <button class="choose-card choose-card-deep" id="journeyMode" type="button">
+          <img class="choose-card-texture" src="./assets/choose/choose-card-deep.png" alt="" aria-hidden="true">
+          <img class="choose-card-glow" src="./assets/choose/choose-card-glow.png" alt="" aria-hidden="true">
+          <span class="choose-card-copy">
+            <strong>完整冰山探索</strong>
+            <span>从冰面之上，<br>一层层回到自己。</span>
+            <em>◷ 约10-15分钟</em>
+            <small>THE FULL JOURNEY WITHIN</small>
+          </span>
+          <img class="choose-arrow choose-arrow-deep" src="./assets/choose/choose-arrow-icon2.png" alt="" aria-hidden="true">
         </button>
       </div>
     </section>
   `);
   document.querySelector("#backEvent").addEventListener("click", renderEventEntry);
-  document.querySelector("#drawMode").addEventListener("click", renderDrawBack);
-  document.querySelector("#journeyMode").addEventListener("click", startJourney);
+  document.querySelector("#drawMode").addEventListener("click", () => enterChoosePath("today", renderDrawBack));
+  document.querySelector("#journeyMode").addEventListener("click", () => enterChoosePath("deep", startJourney));
+}
+
+function enterChoosePath(path, next) {
+  const screenEl = document.querySelector(".choose-screen");
+  if (!screenEl || screenEl.classList.contains("choose-entering")) return;
+  screenEl.classList.add("choose-entering", `choose-enter-${path}`);
+  setTimeout(next, prefersReducedMotion ? 20 : 1000);
 }
 
 function renderDrawBack() {

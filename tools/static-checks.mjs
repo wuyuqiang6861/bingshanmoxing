@@ -31,7 +31,11 @@ const checks = [
   ["event textarea is real input", app.includes("<textarea id=\"eventText\"") && app.includes("maxlength=\"100\"")],
   ["event transition enters modes", app.includes("event-entering") && app.includes("setTimeout(renderModes")],
   ["welcome enters event directly", app.includes("setTimeout(renderEventEntry, prefersReducedMotion ? 20 : 1200)")],
-  ["authorized users enter event directly", app.includes("if (hasAccess()) renderEventEntry();")]
+  ["authorized users enter event directly", app.includes("if (hasAccess()) renderEventEntry();")],
+  ["choose screen uses layered assets", app.includes("choose-bg.webp") && app.includes("choose-particle.png") && app.includes("choose-bottom-crystal.png") && app.includes("choose-crystal-center.png") && app.includes("choose-card-today.png") && app.includes("choose-card-deep.png") && app.includes("choose-card-glow.png")],
+  ["choose arrows are independent assets", app.includes("choose-arrow-icon1.png") && app.includes("choose-arrow-icon2.png")],
+  ["choose reference not displayed", !app.includes("choose-reference.webp")],
+  ["choose paths keep existing destinations", app.includes('enterChoosePath("today", renderDrawBack)') && app.includes('enterChoosePath("deep", startJourney)')]
 ];
 
 const failed = checks.filter(([, ok]) => !ok);

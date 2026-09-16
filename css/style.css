@@ -2239,3 +2239,593 @@ h1 {
     width: 90vw;
   }
 }
+
+/* Choose screen 04: select an inner journey path. */
+.choose-screen {
+  isolation: isolate;
+  min-height: 100dvh;
+  padding: calc(16px + env(safe-area-inset-top)) 22px calc(18px + env(safe-area-inset-bottom));
+  overflow: hidden;
+  background: #071f4b;
+  transform-origin: 50% 56%;
+}
+
+.choose-screen::before,
+.choose-screen::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+}
+
+.choose-screen::before {
+  z-index: -2;
+  inset: -9% -20% auto;
+  height: 48%;
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(255,255,255,.46), rgba(101,201,239,.18) 28%, transparent 62%),
+    linear-gradient(100deg, transparent 18%, rgba(255,255,255,.16) 23%, transparent 32% 58%, rgba(205,190,255,.16) 63%, transparent 73%);
+  filter: blur(2px);
+  opacity: .82;
+  mix-blend-mode: screen;
+  animation: chooseLightDrift 26s ease-in-out infinite;
+}
+
+.choose-screen::after {
+  z-index: -1;
+  left: 50%;
+  bottom: 5%;
+  width: min(230px, 58vw);
+  height: min(230px, 28dvh);
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(230,197,222,.32), rgba(101,201,239,.16) 34%, transparent 68%);
+  filter: blur(12px);
+  opacity: .68;
+  mix-blend-mode: screen;
+  animation: chooseDistantPortal 5.5s ease-in-out infinite;
+}
+
+.choose-bg-layer,
+.choose-particle-layer,
+.choose-bottom-layer,
+.choose-crystal-layer,
+.choose-card-texture,
+.choose-card-glow,
+.choose-arrow {
+  user-select: none;
+  -webkit-user-drag: none;
+  pointer-events: none;
+}
+
+.choose-bg-layer,
+.choose-particle-layer,
+.choose-bottom-layer {
+  position: absolute;
+}
+
+.choose-bg-layer {
+  z-index: -5;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transform: scale(1.035);
+  animation: chooseBgDrift 30s ease-in-out infinite;
+}
+
+.choose-particle-layer {
+  z-index: -3;
+  left: 50%;
+  top: 5%;
+  width: min(470px, 122vw);
+  height: auto;
+  transform: translateX(-50%);
+  opacity: .66;
+  mix-blend-mode: screen;
+  animation: chooseParticleFloat 24s linear infinite;
+}
+
+.choose-bottom-layer {
+  z-index: 1;
+  left: 50%;
+  bottom: -35px;
+  width: min(500px, 128vw);
+  height: auto;
+  transform: translateX(-50%);
+  opacity: .72;
+  filter: drop-shadow(0 -18px 28px rgba(205,190,255,.22));
+  animation: chooseBottomFloat 9s ease-in-out infinite;
+}
+
+.choose-topbar {
+  position: relative;
+  z-index: 8;
+  display: grid;
+  grid-template-columns: 42px 1fr 42px;
+  align-items: start;
+  min-height: 60px;
+}
+
+.choose-back {
+  width: 42px;
+  height: 42px;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255,255,255,.08);
+  color: rgba(255,255,255,.9);
+  font-size: 34px;
+  line-height: 1;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.2);
+  backdrop-filter: blur(12px);
+}
+
+.choose-index {
+  display: grid;
+  justify-items: center;
+  gap: 9px;
+  padding-top: 7px;
+  color: rgba(255,255,255,.9);
+  text-shadow: 0 2px 18px rgba(101,201,239,.4);
+}
+
+.choose-index span {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .33em;
+  animation: chooseTextIn .7s .12s ease both;
+}
+
+.choose-index strong {
+  position: relative;
+  font-size: 14px;
+  font-family: "Songti SC", "STSong", serif;
+  letter-spacing: .18em;
+  font-weight: 700;
+  animation: chooseTextIn .7s .34s ease both;
+}
+
+.choose-index strong::before,
+.choose-index strong::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 42px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.72));
+}
+
+.choose-index strong::before {
+  right: calc(100% + 14px);
+}
+
+.choose-index strong::after {
+  left: calc(100% + 14px);
+  transform: scaleX(-1);
+}
+
+.choose-copy {
+  position: relative;
+  z-index: 6;
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+  margin-top: clamp(2px, 1dvh, 10px);
+  text-align: center;
+  color: #fff;
+  text-shadow: 0 3px 24px rgba(5,45,95,.5);
+}
+
+.choose-copy h2,
+.choose-copy p {
+  margin: 0;
+}
+
+.choose-kicker {
+  order: 3;
+  margin-top: 2px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .25em;
+  color: rgba(231,248,255,.72);
+  animation: chooseTextIn .72s 1.06s ease both;
+}
+
+.choose-copy h2 {
+  font-size: clamp(39px, 11vw, 52px);
+  line-height: 1.18;
+  font-family: "Songti SC", "STSong", serif;
+  font-weight: 800;
+  letter-spacing: .03em;
+  color: rgba(255,255,255,.95);
+  animation: chooseTitleIn .8s .58s cubic-bezier(.2,.8,.2,1) both;
+}
+
+.choose-copy > p:not(.choose-kicker) {
+  font-size: 15px;
+  line-height: 1.65;
+  font-weight: 600;
+  color: rgba(230,246,255,.86);
+  animation: chooseTextIn .72s .84s ease both;
+}
+
+.choose-crystal-stage {
+  position: relative;
+  z-index: 4;
+  width: min(178px, 46vw);
+  height: clamp(98px, 15dvh, 132px);
+  margin: clamp(2px, 1dvh, 8px) auto 0;
+  transform-origin: 50% 68%;
+  animation: chooseCrystalIntro .8s .72s ease-out both, chooseCrystalFloat 6s 1.55s ease-in-out infinite;
+}
+
+.choose-crystal-layer {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: min(108px, 28vw);
+  height: auto;
+  transform: translate(-50%, -50%);
+  filter:
+    brightness(1.1)
+    drop-shadow(0 16px 24px rgba(5,45,95,.28))
+    drop-shadow(0 0 30px rgba(205,190,255,.42));
+}
+
+.choose-bridge {
+  position: relative;
+  z-index: 5;
+  margin: clamp(3px, .8dvh, 10px) 0 clamp(8px, 1.8dvh, 16px);
+  color: rgba(235,248,255,.82);
+  font-size: 14px;
+  line-height: 1.6;
+  font-weight: 600;
+  text-align: center;
+  text-shadow: 0 2px 18px rgba(5,45,95,.44);
+  animation: chooseTextIn .72s 1.25s ease both;
+}
+
+.choose-card-list {
+  position: relative;
+  z-index: 7;
+  display: grid;
+  gap: clamp(10px, 2dvh, 18px);
+  width: 100%;
+  justify-items: center;
+}
+
+.choose-card {
+  position: relative;
+  width: min(330px, 86vw);
+  min-height: clamp(136px, 19dvh, 168px);
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #fff;
+  text-align: left;
+  transform-origin: 50% 50%;
+  touch-action: manipulation;
+}
+
+.choose-card-today {
+  animation: chooseCardIn .76s 1.52s ease both, chooseCardFloatOne 6s 2.3s ease-in-out infinite;
+}
+
+.choose-card-deep {
+  animation: chooseCardIn .76s 1.82s ease both, chooseCardFloatTwo 8s 2.6s ease-in-out infinite;
+}
+
+.choose-card-texture,
+.choose-card-glow {
+  position: absolute;
+  inset: -20px -18px;
+  width: calc(100% + 36px);
+  height: calc(100% + 40px);
+  object-fit: fill;
+}
+
+.choose-card-texture {
+  z-index: 0;
+  opacity: .95;
+  filter: drop-shadow(0 16px 30px rgba(3,26,66,.24));
+}
+
+.choose-card-glow {
+  z-index: 1;
+  opacity: .18;
+  mix-blend-mode: screen;
+  filter: brightness(1.08);
+  transition: opacity .2s ease, filter .2s ease;
+}
+
+.choose-card-copy {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  gap: 8px;
+  width: 64%;
+  margin-left: 42%;
+  padding: 25px 16px 20px 0;
+  text-shadow: 0 3px 18px rgba(3,26,66,.46);
+}
+
+.choose-card-copy strong {
+  font-size: 28px;
+  line-height: 1.1;
+  font-family: "Songti SC", "STSong", serif;
+  font-weight: 800;
+}
+
+.choose-card-copy span {
+  color: rgba(235,248,255,.86);
+  font-size: 14px;
+  line-height: 1.5;
+  font-weight: 600;
+}
+
+.choose-card-copy em {
+  color: rgba(255,255,255,.8);
+  font-style: normal;
+  font-size: 13px;
+  letter-spacing: .03em;
+}
+
+.choose-card-copy small {
+  color: rgba(235,248,255,.68);
+  font-size: 10px;
+  letter-spacing: .22em;
+  white-space: nowrap;
+}
+
+.choose-arrow {
+  position: absolute;
+  z-index: 3;
+  right: 20px;
+  top: 50%;
+  width: 58px;
+  height: 58px;
+  object-fit: contain;
+  transform: translateY(-50%);
+  opacity: .9;
+  filter:
+    brightness(1.04)
+    drop-shadow(0 0 18px rgba(205,190,255,.34));
+  transition: transform .15s ease, filter .15s ease, opacity .15s ease;
+}
+
+.choose-card:active .choose-arrow {
+  transform: translateY(-50%) scale(.9);
+  filter:
+    brightness(1.35)
+    drop-shadow(0 0 28px rgba(230,197,222,.58));
+}
+
+.choose-card:focus-visible .choose-card-glow,
+.choose-card:hover .choose-card-glow {
+  opacity: .34;
+  filter: brightness(1.25);
+}
+
+.choose-entering .choose-particle-layer {
+  animation: chooseParticlesGather 1s ease forwards;
+}
+
+.choose-entering .choose-card {
+  animation-play-state: paused;
+}
+
+.choose-entering.choose-enter-today .choose-card-today,
+.choose-entering.choose-enter-deep .choose-card-deep {
+  animation: chooseCardSelect 1s ease forwards;
+}
+
+.choose-entering.choose-enter-today .choose-card-today .choose-card-glow,
+.choose-entering.choose-enter-deep .choose-card-deep .choose-card-glow {
+  opacity: .68;
+  filter: brightness(1.6) drop-shadow(0 0 34px rgba(230,197,222,.5));
+}
+
+.choose-entering.choose-enter-today .choose-arrow-today,
+.choose-entering.choose-enter-deep .choose-arrow-deep {
+  opacity: 1;
+  filter: brightness(1.55) drop-shadow(0 0 34px rgba(230,197,222,.72));
+}
+
+.choose-entering.choose-enter-deep .choose-crystal-stage {
+  animation: chooseCrystalDescend 1s ease forwards;
+}
+
+.choose-entering {
+  animation: chooseFadeOut 1s ease forwards;
+}
+
+@keyframes chooseBgDrift {
+  0%, 100% { transform: scale(1.035) translate3d(-3px, -6px, 0); filter: brightness(.98); }
+  50% { transform: scale(1.055) translate3d(4px, 7px, 0); filter: brightness(1.06); }
+}
+
+@keyframes chooseLightDrift {
+  0%, 100% { transform: translate3d(-12px, -4px, 0) skewX(-3deg); opacity: .7; }
+  50% { transform: translate3d(14px, 8px, 0) skewX(3deg); opacity: .92; }
+}
+
+@keyframes chooseDistantPortal {
+  0%, 100% { opacity: .46; transform: translateX(-50%) scale(.96); }
+  50% { opacity: .82; transform: translateX(-50%) scale(1.08); }
+}
+
+@keyframes chooseParticleFloat {
+  0% { transform: translate3d(-50%, 22px, 0) rotate(-1deg); opacity: .44; }
+  50% { opacity: .78; }
+  100% { transform: translate3d(-50%, -28px, 0) rotate(1.5deg); opacity: .48; }
+}
+
+@keyframes chooseBottomFloat {
+  0%, 100% { transform: translateX(-50%) translateY(0); opacity: .66; }
+  50% { transform: translateX(-50%) translateY(8px); opacity: .82; }
+}
+
+@keyframes chooseTextIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes chooseTitleIn {
+  from { opacity: 0; transform: translateY(18px) scale(.985); filter: blur(1px); }
+  to { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+}
+
+@keyframes chooseCrystalIntro {
+  from { opacity: 0; transform: scale(.85); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes chooseCrystalFloat {
+  0%, 100% { transform: translate3d(0, -8px, 0) rotate(-2deg); }
+  50% { transform: translate3d(0, 8px, 0) rotate(2deg); }
+}
+
+@keyframes chooseCardIn {
+  from { opacity: 0; transform: translateY(26px) scale(.985); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes chooseCardFloatOne {
+  0%, 100% { transform: translateY(-4px); }
+  50% { transform: translateY(6px); }
+}
+
+@keyframes chooseCardFloatTwo {
+  0%, 100% { transform: translateY(5px); }
+  50% { transform: translateY(-6px); }
+}
+
+@keyframes chooseParticlesGather {
+  from { transform: translate3d(-50%, 0, 0) rotate(0) scale(1); opacity: .68; }
+  to { transform: translate3d(-50%, -10px, 0) rotate(6deg) scale(.78); opacity: 1; }
+}
+
+@keyframes chooseCardSelect {
+  0% { transform: scale(1); }
+  52% { transform: scale(1.05); }
+  100% { transform: scale(1.05); }
+}
+
+@keyframes chooseCrystalDescend {
+  0% { transform: translateY(0) scale(1); opacity: 1; }
+  100% { transform: translateY(44px) scale(.92); opacity: .78; }
+}
+
+@keyframes chooseFadeOut {
+  0% { opacity: 1; transform: scale(1) translateY(0); }
+  70% { opacity: .94; transform: scale(1.06) translateY(18px); }
+  100% { opacity: 0; transform: scale(1.08) translateY(36px); }
+}
+
+@media (max-height: 780px) {
+  .choose-screen {
+    padding-top: calc(10px + env(safe-area-inset-top));
+    padding-bottom: calc(12px + env(safe-area-inset-bottom));
+  }
+
+  .choose-topbar {
+    min-height: 52px;
+  }
+
+  .choose-copy {
+    gap: 5px;
+    margin-top: 0;
+  }
+
+  .choose-copy h2 {
+    font-size: clamp(34px, 9.6vw, 42px);
+    line-height: 1.1;
+  }
+
+  .choose-copy > p:not(.choose-kicker) {
+    font-size: 13px;
+    line-height: 1.48;
+  }
+
+  .choose-kicker {
+    font-size: 9px;
+    letter-spacing: .2em;
+  }
+
+  .choose-crystal-stage {
+    height: clamp(72px, 12dvh, 96px);
+    margin-top: 0;
+  }
+
+  .choose-crystal-layer {
+    width: min(78px, 22vw);
+  }
+
+  .choose-bridge {
+    margin: 0 0 8px;
+    font-size: 12px;
+    line-height: 1.45;
+  }
+
+  .choose-card-list {
+    gap: 7px;
+  }
+
+  .choose-card {
+    min-height: 122px;
+  }
+
+  .choose-card-copy {
+    gap: 5px;
+    padding-top: 21px;
+    padding-bottom: 16px;
+  }
+
+  .choose-card-copy strong {
+    font-size: 23px;
+  }
+
+  .choose-card-copy span {
+    font-size: 12px;
+    line-height: 1.38;
+  }
+
+  .choose-card-copy em {
+    font-size: 12px;
+  }
+
+  .choose-card-copy small {
+    font-size: 9px;
+    letter-spacing: .16em;
+  }
+
+  .choose-arrow {
+    width: 50px;
+    height: 50px;
+  }
+}
+
+@media (max-width: 360px) {
+  .choose-screen {
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+
+  .choose-index span {
+    font-size: 10px;
+    letter-spacing: .27em;
+  }
+
+  .choose-index strong::before,
+  .choose-index strong::after {
+    width: 28px;
+  }
+
+  .choose-card {
+    width: 90vw;
+  }
+
+  .choose-card-copy small {
+    white-space: normal;
+  }
+}
