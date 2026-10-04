@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>立体书机关随机抽牌</title>
+    <link rel="stylesheet" href="./style.css" />
+    <script>
+      if (window.innerWidth <= 700 && !location.pathname.endsWith("/mobile.html")) {
+        location.replace("./mobile.html");
+      }
+    </script>
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="stage-panel" aria-label="立体书机关随机抽牌">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">Pop-up Mechanism Card Draw</p>
+            <h1>立体书机关随机抽牌</h1>
+          </div>
+          <div class="brand">玩立体书的疗愈师宇强</div>
+        </header>
+
+        <section class="draw-layout">
+          <aside class="control-panel">
+            <div class="stat-row">
+              <span>机关库</span>
+              <strong id="cardCount">60</strong>
+            </div>
+            <div class="stat-row">
+              <span>停卡时间</span>
+              <strong>5s</strong>
+            </div>
+            <div class="hold-layer done" id="holdLayer" aria-live="polite">
+              <span>停卡倒计时</span>
+              <strong id="countdown">5</strong>
+            </div>
+            <label class="field">
+              <span>抽牌范围</span>
+              <select id="categoryFilter">
+                <option value="all">全部机关</option>
+                <option value="90° 切折类">90° 切折类</option>
+                <option value="180° 贴片类">180° 贴片类</option>
+                <option value="平面互动类">平面互动类</option>
+                <option value="整书结构类">整书结构类</option>
+              </select>
+            </label>
+            <button id="drawButton" class="draw-button" type="button">点击抽牌</button>
+            <button id="resetButton" class="ghost-button" type="button">重置画面</button>
+            <div class="hint">
+              点击后先出现机关画面，停留 5 秒，再揭示名称、原理、要点和用途。
+            </div>
+          </aside>
+
+          <section class="card-zone">
+            <div class="card-frame" id="cardFrame">
+              <div class="card-back" id="cardBack">
+                <div class="deck-lines" aria-hidden="true">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </div>
+                <p>等待抽牌</p>
+              </div>
+
+              <article class="mechanism-card" id="mechanismCard" hidden>
+                <div class="card-meta">
+                  <span id="cardNumber">00</span>
+                  <span id="cardCategory">机关类别</span>
+                  <span id="cardDifficulty">★</span>
+                </div>
+                <div class="mechanism-visual" id="mechanismVisual" aria-label="机关结构示意图"></div>
+              </article>
+            </div>
+          </section>
+
+          <section class="reveal-panel" id="revealPanel" aria-live="polite">
+            <div class="empty-state" id="emptyState">
+              <p>抽牌后，先停留机关原图 5 秒；倒计时结束后，这里会显示机关名称、原理、要点和用途。</p>
+            </div>
+            <div class="detail-grid" id="detailGrid" hidden>
+              <div class="title-block">
+                <p id="englishName"></p>
+                <h2 id="mechanismName"></h2>
+              </div>
+              <div class="detail-item">
+                <h3>原理</h3>
+                <p id="principle"></p>
+              </div>
+              <div class="detail-item">
+                <h3>要点</h3>
+                <p id="keyPoint"></p>
+              </div>
+              <div class="detail-item">
+                <h3>用途</h3>
+                <p id="usage"></p>
+              </div>
+            </div>
+          </section>
+        </section>
+      </section>
+    </main>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
